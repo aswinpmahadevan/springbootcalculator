@@ -1,0 +1,3 @@
+com\example\calculator\config\TestSecurityConfig.class
+com\example\calculator\controller\CalculatorControllerTest.class
+com\example\calculator\CalculatorApplicationTests.class

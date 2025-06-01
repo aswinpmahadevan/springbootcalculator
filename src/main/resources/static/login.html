@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Naruto Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(-45deg, #ff9800, #f44336, #ffeb3b, #2196f3);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            font-family: 'Permanent Marker', cursive, Arial, sans-serif;
+            display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;
+        }
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .login-container {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            border: 2px solid #ff9800;
+            max-width: 350px;
+        }
+        h2 {
+            color: #f44336;
+            text-shadow: 2px 2px 8px #ffeb3b, 0 0 10px #2196f3;
+        }
+        .login-input {
+            font-size: 1.1em;
+            padding: 8px 12px;
+            margin: 8px 4px;
+            border-radius: 8px;
+            border: 2px solid #2196f3;
+            outline: none;
+            width: 80%;
+        }
+        .login-btn {
+            background: linear-gradient(90deg, #ff9800, #f44336);
+            color: #fff;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 30px;
+            margin-top: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(244,67,54,0.2);
+            transition: background 0.3s, transform 0.2s;
+        }
+        .login-btn:hover {
+            background: linear-gradient(90deg, #f44336, #ff9800);
+            transform: scale(1.05);
+        }
+        .naruto-img {
+            width: 80px;
+            margin-bottom: 10px;
+            animation: shake 2s infinite;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0);}
+            20% { transform: translateX(-5px);}
+            40% { transform: translateX(5px);}
+            60% { transform: translateX(-5px);}
+            80% { transform: translateX(5px);}
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="/images/naruto.png" alt="Naruto" class="naruto-img">
+        <h2>Login to Enter Konoha</h2>
+        <div id="error-message" style="color:red; font-weight:bold;">
+            <script>
+                if(window.location.search.includes('error')) {
+                    document.write('Invalid username or password!');
+                }
+            </script>
+        </div>
+        <form method="post" action="/login">
+            <input class="login-input" type="text" name="username" placeholder="Ninja Name" required><br>
+            <input class="login-input" type="password" name="password" placeholder="Secret Jutsu" required><br>
+            <button class="login-btn" type="submit">Enter</button>
+        </form>
+        <p style="margin-top:20px;">
+            <a href="/register.html" style="color:#2196f3;text-decoration:underline;font-size:1.1em;">New Ninja? Register here!</a>
+        </p>
+    </div>
+</body>
+</html>
