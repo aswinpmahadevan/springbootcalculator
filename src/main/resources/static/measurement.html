@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Naruto Measurements</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Permanent Marker', cursive, Arial, sans-serif;
+            background: linear-gradient(-45deg, #ff9800, #f44336, #ffeb3b, #2196f3);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .container {
+            background: rgba(255,255,255,0.18);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
+            padding: 40px 40px 32px 40px;
+            text-align: center;
+            backdrop-filter: blur(7px);
+            border: 2px solid #ff9800;
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            background: linear-gradient(90deg,#2196f3,#f44336);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 18px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: 'Permanent Marker', cursive, Arial, sans-serif;
+        }
+        .logout-btn:hover {
+            background: linear-gradient(90deg,#f44336,#2196f3);
+        }
+        h1 {
+            color: #f44336;
+            text-shadow: 2px 2px 8px #ffeb3b, 0 0 10px #2196f3;
+            margin-bottom: 18px;
+            font-size: 2em;
+        }
+        .measure-inputs {
+            margin-bottom: 18px;
+        }
+        .measure-inputs input, .measure-inputs select {
+            font-size: 1.08em;
+            padding: 8px 12px;
+            margin: 8px 4px;
+            border-radius: 8px;
+            border: 2px solid #2196f3;
+            outline: none;
+            width: 80%;
+            background: rgba(255,255,255,0.7);
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        .measure-inputs input:focus, .measure-inputs select:focus {
+            border: 2px solid #f44336;
+            box-shadow: 0 0 8px #2196f3;
+        }
+        .measure-btn {
+            background: linear-gradient(90deg, #ff9800, #f44336);
+            color: #fff;
+            font-size: 1.15em;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 32px;
+            margin-top: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(244,67,54,0.18);
+            transition: background 0.3s, transform 0.2s;
+            font-family: 'Permanent Marker', cursive, Arial, sans-serif;
+            letter-spacing: 1px;
+        }
+        .measure-btn:hover {
+            background: linear-gradient(90deg, #f44336, #ff9800);
+            transform: scale(1.06);
+        }
+        #measureResult {
+            margin-top: 18px;
+            font-size: 1.2em;
+            color: #2196f3;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="logoutForm" action="/logout" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        <h1>Naruto Measurements</h1>
+        <img src="/images/sakura.png" alt="Sakura" style="width:60px; margin-bottom:10px; border-radius:50%; border:2px solid #f44336; box-shadow:0 0 12px #ffeb3b88;">
+        <form id="measureForm" autocomplete="off">
+            <div class="measure-inputs">
+                <select id="shape" name="shape" required>
+                    <option value="">Select Shape</option>
+                    <option value="circle">Circle</option>
+                    <option value="square">Square</option>
+                    <option value="rectangle">Rectangle</option>
+                    <option value="triangle">Triangle</option>
+                    <option value="cube">Cube</option>
+                    <option value="cylinder">Cylinder</option>
+                </select>
+                <div id="shapeInputs"></div>
+                <select id="measureType" name="measureType" required>
+                    <option value="area">Area</option>
+                    <option value="perimeter">Perimeter</option>
+                </select>
+            </div>
+            <button class="measure-btn" type="submit">Genjutsu Release</button>
+        </form>
+        <audio id="genjutsuSound" src="/sounds/sakura.mp3"></audio>
+        <div id="measureResult"></div>
+    </div>
+    <script>
+        const shapeInputsDiv = document.getElementById('shapeInputs');
+        const shapeSelect = document.getElementById('shape');
+        const measureTypeSelect = document.getElementById('measureType');
+        const measureForm = document.getElementById('measureForm');
+        const measureResult = document.getElementById('measureResult');
+        const genjutsuSound = document.getElementById('genjutsuSound');
+
+        function renderInputs() {
+            const shape = shapeSelect.value;
+            let html = '';
+            if (shape === 'circle') {
+                html = '<input type="number" name="radius" placeholder="Radius" step="any" required>';
+            } else if (shape === 'square') {
+                html = '<input type="number" name="side" placeholder="Side" step="any" required>';
+            } else if (shape === 'rectangle') {
+                html = '<input type="number" name="length" placeholder="Length" step="any" required>' +
+                       '<input type="number" name="width" placeholder="Width" step="any" required>';
+            } else if (shape === 'triangle') {
+                html = '<input type="number" name="a" placeholder="Side a" step="any" required>' +
+                       '<input type="number" name="b" placeholder="Side b" step="any" required>' +
+                       '<input type="number" name="c" placeholder="Side c" step="any" required>';
+            } else if (shape === 'cube') {
+                html = '<input type="number" name="side" placeholder="Side" step="any" required>';
+            } else if (shape === 'cylinder') {
+                html = '<input type="number" name="radius" placeholder="Radius" step="any" required>' +
+                       '<input type="number" name="height" placeholder="Height" step="any" required>';
+            }
+            shapeInputsDiv.innerHTML = html;
+        }
+        shapeSelect.addEventListener('change', renderInputs);
+
+        measureForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (genjutsuSound) {
+                genjutsuSound.currentTime = 0;
+                genjutsuSound.play();
+            }
+            const data = new FormData(measureForm);
+            const params = new URLSearchParams();
+            for (const pair of data.entries()) {
+                params.append(pair[0], pair[1]);
+            }
+            const response = await fetch('/api/measure/calculate?' + params.toString());
+            if (response.ok) {
+                const result = await response.json();
+                measureResult.innerHTML = 
+                    `<div>${result.shape} ${result.measureType}: <b>${result.value}</b></div>`;
+            } else {
+                measureResult.textContent = "Error calculating measurement!";
+            }
+        });
+    </script>
+</body>
+</html>
