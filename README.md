@@ -1,57 +1,104 @@
-# Spring Boot Calculator API
+# Spring Boot Calculator
 
-This project is a simple Spring Boot application that provides a RESTful API for performing basic arithmetic operations: addition, subtraction, multiplication, and division. The application is designed to run on port 9200 and includes CORS configuration for development purposes.
+A secure, Naruto-themed calculator web application built with Spring Boot.  
+Features user registration, login, and a stylish calculator UI that calls backend APIs for arithmetic operations.
+
+---
 
 ## Features
 
-- **Addition**: Perform addition of two numbers.
-- **Subtraction**: Perform subtraction of two numbers.
-- **Multiplication**: Perform multiplication of two numbers.
-- **Division**: Perform division of two numbers.
+- **User Registration & Login**: Secure authentication with password hashing.
+- **Naruto-Themed UI**: Fun, animated calculator and registration/login pages.
+- **Calculator Operations**: Addition, subtraction, multiplication, division, power, root, log, ln, exp, factorial, mod, abs.
+- **RESTful API**: All calculations are performed via `/api/calc/*` endpoints.
+- **Logout**: Secure logout option on the calculator page.
+- **Sound Effects**: Plays a jutsu sound on calculation.
 
-## Technologies Used
+---
 
-- Spring Boot
-- Java
-- Maven
-- JUnit for testing
+## Project Structure
 
-## Setup Instructions
+```
+spring-boot-calculator/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/example/calculator/
+│   │   │       ├── config/
+│   │   │       │   └── SecurityConfig.java
+│   │   │       ├── controller/
+│   │   │       │   ├── CalculatorController.java
+│   │   │       │   └── UserController.java
+│   │   │       ├── model/
+│   │   │       │   └── User.java
+│   │   │       ├── repository/
+│   │   │       │   └── UserRepository.java
+│   │   │       └── service/
+│   │   │           └── CustomUserDetailsService.java
+│   │   └── resources/
+│   │       └── static/
+│   │           ├── calculator.html
+│   │           ├── login.html
+│   │           ├── register.html
+│   │           ├── js/
+│   │           │   └── calculator.js
+│   │           ├── images/
+│   │           │   └── naruto.png
+│   │           └── sounds/
+│   │               └── jutsu.mp3
+│   └── test/
+│       └── java/
+│           └── com/example/calculator/
+│               └── CalculatorApplicationTests.java
+├── pom.xml
+└── README.md
+```
 
-1. **Clone the repository**:
+---
+
+## How to Run
+
+1. **Clone the repository**
+2. **Configure your database** (see `application.properties`)
+3. **Build and run**
+   ```sh
+   mvn clean spring-boot:run
    ```
-   git clone <repository-url>
-   cd spring-boot-calculator
-   ```
+4. **Access the app**
+   - Open [http://localhost:9200/login.html](http://localhost:9200/login.html) in your browser.
 
-2. **Build the project**:
-   ```
-   mvn clean install
-   ```
+---
 
-3. **Run the application**:
-   ```
-   mvn spring-boot:run
-   ```
+## Usage
 
-4. **Access the API**:
-   The API will be available at `http://localhost:9200`.
+- **Register** a new user via the registration page.
+- **Login** with your credentials.
+- After login, you will be redirected to the calculator page.
+- Use the calculator UI to perform operations. Results are fetched from the backend.
+- Click **Logout** to end your session.
+
+---
 
 ## API Endpoints
 
-- **Addition**: `POST /api/add`
-- **Subtraction**: `POST /api/subtract`
-- **Multiplication**: `POST /api/multiply`
-- **Division**: `POST /api/divide`
+- `POST /register` — Register a new user
+- `POST /login` — Login (handled by Spring Security)
+- `GET /api/calc/add?a=1&b=2` — Add
+- `GET /api/calc/subtract?a=5&b=3` — Subtract
+- ...and similar for other operations
 
-## Testing
+---
 
-Unit tests are included in the project to ensure the functionality of the application. You can run the tests using the following command:
+## Customization
 
-```
-mvn test
-```
+- **Images**: Place your Naruto images in `src/main/resources/static/images/`.
+- **Sounds**: Place your sound effects in `src/main/resources/static/sounds/`.
+- **UI**: Edit `calculator.html`, `login.html`, and `register.html` for further customization.
+
+---
 
 ## License
 
-This project is licensed under the MIT License.# springbootcalculator
+This project is for educational/demo purposes.
+
+---
