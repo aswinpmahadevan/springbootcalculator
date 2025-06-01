@@ -29,7 +29,7 @@ public class SecurityConfig {
             .formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/calculator.html", true)
+                .defaultSuccessUrl("/main.html", true) // <-- update this line
                 .failureUrl("/login.html?error")
                 .permitAll()
             .and()
